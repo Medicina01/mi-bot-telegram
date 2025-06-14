@@ -341,6 +341,25 @@ def main() -> None:
     logger.info(f"🤖 Bot iniciado - Usuario autorizado: {AUTHORIZED_USER_ID}")
     print("Bot en ejecución. Presiona Ctrl+C para detener.")
     updater.idle()
+# ... [todo tu código existente] ...
+
+# ======== 👇 PEGA ESTO JUSTO AQUÍ 👇 ========
+from flask import Flask
+from threading import Thread
+
+app = Flask(__name__)
+
+@app.route('/')
+def home():
+    return "🤖 Bot activo + WebServer OK!"
+
+def run_flask():
+    app.run(host='0.0.0.0', port=8080)
+
+# Iniciar Flask en segundo plano
+flask_thread = Thread(target=run_flask)
+flask_thread.daemon = True  
+flask_thread.start()
 
 if __name__ == '__main__':
     main()
